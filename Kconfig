@@ -1,0 +1,42 @@
+mainmenu "Ubuntu Rootfs Configuration"
+
+config CPU_ARCH
+	string "CPU architecture"
+	default "arm64"
+	help
+	  Target CPU architecture (e.g. arm64, armhf).
+
+config CPU
+	string "CPU model"
+	default "rk3576"
+	help
+	  Target CPU/SoC model.
+
+config NAME
+	string "Target name"
+	default "cocolamp"
+	help
+	  Device or product name. Used for cache folder naming, default user, and hostname.
+
+config PASSWORD
+	string "Default password (empty means do not set password)"
+	default ""
+	help
+	  Password applied to the default user during base stage.
+	  Leave empty to skip default user password configuration.
+
+config ROOT_PASSWORD
+	string "Root password (empty means do not set root password)"
+	default ""
+	help
+	  Password applied to root during base stage.
+	  Leave empty to skip root password configuration.
+
+source "base/Kconfig"
+source "fstab/Kconfig"
+source "app/Kconfig"
+source "desktop/Kconfig"
+source "deb/Kconfig"
+source "devlop/Kconfig"
+source "clean/Kconfig"
+source "packge/Kconfig"

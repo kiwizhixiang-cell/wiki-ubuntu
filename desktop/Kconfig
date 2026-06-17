@@ -1,0 +1,10 @@
+menu "Desktop"
+
+config UBUNTU_DESKTOP
+	string "Desktop packages"
+	default ""
+	help
+	  Space-separated list of desktop packages to install
+	  (e.g. ubuntu-desktop-minimal).
+
+endmenu

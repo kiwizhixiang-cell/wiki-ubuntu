@@ -1,0 +1,10 @@
+menu "Base System"
+
+config UBUNTU_BASE
+	string "Ubuntu base version"
+	default "26.04"
+	help
+	  Ubuntu version used for the base rootfs.
+	  This determines the debootstrap suite and package sources.
+
+endmenu

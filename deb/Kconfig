@@ -1,0 +1,104 @@
+menu "Deb Packages"
+
+config UBUNTU_DEB
+	bool "Install custom deb packages"
+	default y
+	help
+	  Install custom deb packages into the rootfs.
+
+if UBUNTU_DEB
+
+config UBUNTU_DEB_ADB
+	bool "ADB"
+	default y
+
+config UBUNTU_DEB_MALI
+	bool "Mali GPU (libmali-bifrost-g52)"
+	default y
+
+config UBUNTU_DEB_MPP
+	bool "Rockchip MPP (Media Process Platform)"
+	default y
+
+config UBUNTU_DEB_MPP_DEV
+	bool "Rockchip MPP dev"
+	default n
+	depends on UBUNTU_DEB_MPP
+
+config UBUNTU_DEB_RGA
+	bool "Rockchip RGA (2D Graphic Acceleration)"
+	default y
+
+config UBUNTU_DEB_RGA_DEV
+	bool "Rockchip RGA dev"
+	default n
+	depends on UBUNTU_DEB_RGA
+
+config UBUNTU_DEB_RKNPU2
+	bool "RKNPU2 (NPU runtime)"
+	default y
+
+config UBUNTU_DEB_RKNPU2_DEV
+	bool "RKNPU2 dev"
+	default n
+	depends on UBUNTU_DEB_RKNPU2
+
+config UBUNTU_DEB_ROCKIT
+	bool "Rockit multimedia framework"
+	default y
+
+config UBUNTU_DEB_ROCKIT_DEV
+	bool "Rockit dev"
+	default n
+	depends on UBUNTU_DEB_ROCKIT
+
+config UBUNTU_DEB_ROCKIT_TEST
+	bool "Rockit test"
+	default n
+	depends on UBUNTU_DEB_ROCKIT
+
+config UBUNTU_DEB_CAMERA
+	bool "Camera Engine RKAIQ"
+	default y
+
+config UBUNTU_DEB_IVA
+	bool "IVA (Intelligent Video Analytics)"
+	default n
+
+config UBUNTU_DEB_IVA_DEV
+	bool "IVA dev"
+	default n
+	depends on UBUNTU_DEB_IVA
+
+config UBUNTU_DEB_COMMON_ALGO
+	bool "Common Algorithm RK3576"
+	default n
+
+config UBUNTU_DEB_COMMON_ALGO_DEV
+	bool "Common Algorithm dev"
+	default n
+	depends on UBUNTU_DEB_COMMON_ALGO
+
+config UBUNTU_DEB_GSTREAMER
+	bool "GStreamer Rockchip plugin"
+	default y
+
+config UBUNTU_DEB_RECOVERY
+	bool "Recovery"
+	default n
+
+config UBUNTU_DEB_WIFI_AIC8800
+	bool "WiFi/BT AIC8800"
+	default n
+
+config UBUNTU_DEB_WIFI_AP6256
+	bool "WiFi/BT AP6256"
+	default n
+
+config UBUNTU_DEB_WIFI_RTL8822CE
+	bool "WiFi/BT RTL8822CE"
+	default n
+
+endif
+
+endmenu

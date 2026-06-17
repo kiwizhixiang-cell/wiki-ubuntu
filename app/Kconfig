@@ -1,0 +1,9 @@
+menu "App Packages"
+
+config UBUNTU_APP
+	string "App packages"
+	default "psmisc"
+	help
+	  Space-separated list of application packages to install.
+
+endmenu

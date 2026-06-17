@@ -1,0 +1,34 @@
+menu "Development"
+
+config UBUNTU_DEVLOP
+	string "Development packages"
+	default ""
+	help
+	  Space-separated list of development packages to install
+	  (e.g. openssh-server cmake curl git).
+
+config UBUNTU_DEVLOP_AUTOLOGIN
+	bool "Enable GDM auto login"
+	default n
+	help
+	  Automatically login to desktop as the default user (cocolamp).
+
+config UBUNTU_DEVLOP_USB_ADB
+	bool "Enable USB ADB"
+	default y
+	help
+	  Enable USB ADB function in .usb_config.
+
+config UBUNTU_DEVLOP_USB_RNDIS
+	bool "Enable USB RNDIS"
+	default n
+	help
+	  Enable USB RNDIS network function in .usb_config.
+
+config UBUNTU_DEVLOP_MOUSEHOP
+	bool "Install mousehop"
+	default n
+	help
+	  Install mousehop binary to /usr/bin/.
+
+endmenu

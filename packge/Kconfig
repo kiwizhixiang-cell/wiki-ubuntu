@@ -1,0 +1,23 @@
+menu "Package"
+
+config UBUNTU_PACKGE
+	bool "Package rootfs into image"
+	default y
+	help
+	  Package the rootfs directory into an ext4 image file.
+
+config UBUNTU_PACKGE_BS
+	int "dd block size (bytes)"
+	default 512
+	depends on UBUNTU_PACKGE
+	help
+	  Block size for dd when creating the rootfs image.
+
+config UBUNTU_PACKGE_COUNT
+	string "dd block count"
+	default "512k"
+	depends on UBUNTU_PACKGE
+	help
+	  Number of blocks for dd (e.g. 512k = 256MB).
+
+endmenu

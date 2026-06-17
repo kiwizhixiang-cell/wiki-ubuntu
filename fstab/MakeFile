@@ -1,0 +1,8 @@
+.PHONY: install clean
+
+install:
+	@echo "==> Installing fstab packages..."
+	@bash $(CURDIR)/install.sh
+
+clean:
+	@rm -f $(CACHE_ROOTFS_DIR)/ubuntu-fstab-*.tar.gz

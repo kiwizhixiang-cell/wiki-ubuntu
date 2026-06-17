@@ -1,0 +1,104 @@
+menu "Clean"
+
+config UBUNTU_CLEAN
+	bool "Clean rootfs after build"
+	default y
+	help
+	  Clean up the rootfs after building (remove apt caches,
+	  temporary files, etc.) to reduce the final image size.
+
+if UBUNTU_CLEAN
+
+config UBUNTU_CLEAN_APT
+	bool "Clean apt caches and package lists"
+	default y
+	help
+	  Run apt clean/autoclean and remove apt package lists/cache
+	  files under /var/lib/apt/lists and /var/cache/apt.
+
+config UBUNTU_CLEAN_DOCS
+	bool "Clean documentation files"
+	default n
+	help
+	  Remove documentation directories to reduce image size:
+	  /usr/share/doc, /usr/share/man and /usr/share/info.
+
+config UBUNTU_CLEAN_TMP
+	bool "Clean temporary files"
+	default y
+	help
+	  Remove files under /tmp and /var/tmp.
+
+config UBUNTU_CLEAN_LOG
+	bool "Clean log files"
+	default y
+	help
+	  Remove common log files in /var/log and apt logs.
+
+config UBUNTU_CLEAN_HISTORY
+	bool "Clean shell history files"
+	default y
+	help
+	  Remove root and user bash history files.
+
+config UBUNTU_CLEAN_LOCALE
+	bool "Clean locale data (keep C/C.UTF-8/en)"
+	default n
+	help
+	  Remove most locale files under /usr/share/locale except
+	  C, C.UTF-8 and English locales.
+
+config UBUNTU_CLEAN_REMOVE_QEMU
+	bool "Remove qemu-aarch64-static from rootfs"
+	default y
+	help
+	  Remove /usr/bin/qemu-aarch64-static after clean stage.
+
+config UBUNTU_CLEAN_PKG_MANAGER
+	bool "Remove apt/dpkg tools and databases"
+	default n
+	help
+	  Remove apt and dpkg binaries, libraries and databases:
+	  usr/bin/apt*, usr/bin/dpkg*, usr/sbin/dpkg-*,
+	  usr/lib/apt/, usr/lib/dpkg/,
+	  var/lib/apt/, var/lib/dpkg/,
+	  var/cache/apt/, var/cache/debconf/,
+	  usr/bin/gpgv.
+	  Enable only if the rootfs will never use apt/dpkg at runtime.
+
+config UBUNTU_CLEAN_PERL
+	bool "Remove Perl runtime"
+	default n
+	help
+	  Remove the Perl binary and its base libraries
+	  (usr/bin/perl, usr/lib/aarch64-linux-gnu/perl-base,
+	  usr/share/perl5).
+	  Enable only if no scripts or tools in the image require Perl.
+
+config UBUNTU_CLEAN_CARGO
+	bool "Remove Rust/cargo coreutils binary"
+	default y
+	help
+	  Remove /usr/lib/cargo (contains a Rust-built coreutils binary,
+	  ~11 MB). The standard coreutils binary in /usr/bin is kept.
+
+config UBUNTU_CLEAN_SHELL_COMPLETIONS
+	bool "Remove shell completion scripts"
+	default n
+	help
+	  Remove bash/zsh/fish completion scripts (~2.4 MB):
+	  usr/share/bash-completion/,
+	  usr/share/zsh/,
+	  usr/share/fish/.
+
+config UBUNTU_CLEAN_PACKAGING_MISC
+	bool "Remove packaging helper files"
+	default n
+	help
+	  Remove Debian packaging helper data not needed at runtime:
+	  usr/share/lintian/, usr/share/bug/,
+	  usr/share/common-licenses/.
+
+endif
+
+endmenu

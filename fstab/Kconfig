@@ -1,0 +1,10 @@
+menu "Fstab / Init System"
+
+config UBUNTU_FSTAB
+	string "Fstab packages"
+	default "kmod systemd systemd-sysv udev"
+	help
+	  Space-separated list of packages to install for
+	  filesystem table and init system support.
+
+endmenu
