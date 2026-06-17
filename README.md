@@ -1,2 +1,2 @@
 # wiki-ubuntu
-Ubuntu is also supported on SoCs
+Ubuntu can also be built for SoCs.
