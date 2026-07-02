@@ -6,8 +6,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TOP_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 source "${TOP_DIR}/.config"
+source "${TOP_DIR}/cache-common.sh"
 
-CACHE_ROOTFS_DIR="${CACHE_ROOTFS_DIR:-${TOP_DIR}/output/${CONFIG_NAME:-default}/cache/rootfs}"
+ensure_cache_rootfs_dir
 CACHE_APT_DIR="${CACHE_APT_DIR:-${TOP_DIR}/dl/packages-${CONFIG_UBUNTU_BASE}-${CONFIG_CPU_ARCH}}"
 CACHE_FILE="${CACHE_ROOTFS_DIR}/ubuntu-app-${APP_CACHE_HASH}.tar.gz"
 
@@ -23,6 +24,11 @@ if [ -f "${CACHE_FILE}" ]; then
     sudo chown root:root "${ROOTFS}"
     sudo tar zxf "${CACHE_FILE}" -C "${ROOTFS}"
 else
+    if [ ! -d "${ROOTFS}/var/cache/apt/archives" ]; then
+        restore_from_first_available_stage fstab base || true
+    fi
+    sudo mkdir -p "${ROOTFS}/var/cache/apt/archives"
+
     # Restore cached deb packages if available
     DEB_CACHE_DIR="${CACHE_APT_DIR}"
     mkdir -p "${DEB_CACHE_DIR}"

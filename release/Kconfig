@@ -1,0 +1,49 @@
+menu "Clean"
+
+config CONFIG_UBUNTU_RELEASE
+	bool "Clean rootfs after build"
+	default y
+	help
+	  Clean up the rootfs after building (remove apt caches,
+	  temporary files, etc.) to reduce the final image size.
+
+if CONFIG_UBUNTU_RELEASE
+
+config CONFIG_UBUNTU_RELEASE_APT
+	bool "Clean apt caches and package lists"
+	default y
+	help
+	  Run apt clean/autoclean and remove apt package lists/cache
+	  files under /var/lib/apt/lists and /var/cache/apt.
+
+config CONFIG_UBUNTU_RELEASE_RM_VIM
+	bool "Remove vim and vim-runtime"
+	default n
+	help
+	  Remove vim and vim-runtime packages (~41MB).
+	  Consider installing vim-tiny as a lightweight alternative.
+
+config CONFIG_UBUNTU_RELEASE_RM_APT
+	bool "Remove apt"
+	default n
+	help
+	  Remove apt package manager (~4.7MB).
+	  WARNING: You will not be able to install/update packages on the target.
+
+config CONFIG_UBUNTU_RELEASE_RM_PASSWD
+	bool "Remove passwd"
+	default n
+	help
+	  Remove passwd package (~4.7MB).
+	  WARNING: User management commands (passwd, useradd, etc.) will be unavailable.
+
+config CONFIG_UBUNTU_RELEASE_RM_PERL
+	bool "Remove perl-base"
+	default n
+	help
+	  Remove perl-base package (~7.9MB).
+	  WARNING: Some system scripts may depend on perl.
+
+endif
+
+endmenu

@@ -20,6 +20,7 @@ CONFIG_UBUNTU_FSTAB="kmod systemd systemd-sysv udev"
 
 CONFIG_UBUNTU_APP="psmisc"
 
+
 #
 # Deb Packages
 #
@@ -44,27 +45,24 @@ CONFIG_UBUNTU_DEB_WIFI_AIC8800=y
 # CONFIG_UBUNTU_DEB_WIFI_AP6256 is not set
 # CONFIG_UBUNTU_DEB_WIFI_RTL8822CE is not set
 
-CONFIG_UBUNTU_DEVLOP="sudo net-tools v4l-utils gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-rtsp openssh-server network-manager netcat-openbsd alsa-utils pipewire-alsa libasound2-plugins pipewire-pulse wireplumber build-essential pkg-config libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev meson ninja-build"
+CONFIG_UBUNTU_DEVLOP="sudo vim net-tools v4l-utils gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-rtsp openssh-server network-manager netcat-openbsd alsa-utils pipewire-alsa libasound2-plugins pipewire-pulse wireplumber build-essential pkg-config libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev meson ninja-build"
 # openssh-server iperf3 cmake curl less redis git libdbus-1-dev
 CONFIG_UBUNTU_DEVLOP_USB_ADB=y
 CONFIG_UBUNTU_DEVLOP_USB_RNDIS=y
+#CONFIG_UBUNTU_DEVLOP_USB_UVC=y
+CONFIG_UBUNTU_DEVLOP_USB_RNDIS_DHCP=y
+CONFIG_UBUNTU_DEVLOP_USB_RNDIS_IPV4="172.16.24.1/24"
+CONFIG_UBUNTU_DEVLOP_USB_RNDIS_DHCP_RANGE="172.16.24.100,172.16.24.150,12h"
+CONFIG_UBUNTU_DEVLOP_SERIAL_CONSOLE=y
+CONFIG_UBUNTU_DEVLOP_SERIAL_TTY="ttyS0"
+CONFIG_UBUNTU_DEVLOP_SERIAL_BAUDRATE="115200"
+
+# CONFIG_UBUNTU_ROS="ros-lyrical-ros-base"
 
 #
-# Clean
+# RELEASE
 #
-CONFIG_UBUNTU_CLEAN=y
-CONFIG_UBUNTU_CLEAN_APT=y
-CONFIG_UBUNTU_CLEAN_DOCS=y
-CONFIG_UBUNTU_CLEAN_TMP=y
-CONFIG_UBUNTU_CLEAN_LOG=y
-CONFIG_UBUNTU_CLEAN_HISTORY=y
-# CONFIG_UBUNTU_CLEAN_LOCALE is not set
-CONFIG_UBUNTU_CLEAN_REMOVE_QEMU=y
-CONFIG_UBUNTU_CLEAN_PKG_MANAGER=y
-# CONFIG_UBUNTU_CLEAN_PERL is not set
-CONFIG_UBUNTU_CLEAN_CARGO=y
-# CONFIG_UBUNTU_CLEAN_SHELL_COMPLETIONS is not set
-# CONFIG_UBUNTU_CLEAN_PACKAGING_MISC is not set
+CONFIG_UBUNTU_RELEASE=y
 
 #
 # Package

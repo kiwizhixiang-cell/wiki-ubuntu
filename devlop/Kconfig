@@ -25,10 +25,49 @@ config UBUNTU_DEVLOP_USB_RNDIS
 	help
 	  Enable USB RNDIS network function in .usb_config.
 
+config UBUNTU_DEVLOP_USB_RNDIS_DHCP
+	bool "Enable DHCP server on RNDIS"
+	default y
+	help
+	  Start dnsmasq on RNDIS interface and assign IP addresses
+	  to the connected host.
+
+config UBUNTU_DEVLOP_USB_RNDIS_IPV4
+	string "RNDIS interface IPv4/CIDR"
+	default "172.16.24.1/24"
+	help
+	  Local IPv4 address configured on USB RNDIS interface.
+
+config UBUNTU_DEVLOP_USB_RNDIS_DHCP_RANGE
+	string "RNDIS DHCP range"
+	default "172.16.24.100,172.16.24.150,12h"
+	help
+	  dnsmasq dhcp-range value, format: start,end,lease_time.
+
 config UBUNTU_DEVLOP_MOUSEHOP
 	bool "Install mousehop"
 	default n
 	help
 	  Install mousehop binary to /usr/bin/.
+
+config UBUNTU_DEVLOP_SERIAL_CONSOLE
+	bool "Enable serial console login"
+	default y
+	help
+	  Enable serial console getty service for login via serial port.
+
+config UBUNTU_DEVLOP_SERIAL_TTY
+	string "Serial console device"
+	depends on UBUNTU_DEVLOP_SERIAL_CONSOLE
+	default "ttyS0"
+	help
+	  Serial port device for console (e.g., ttyS0, ttyAMA0).
+
+config UBUNTU_DEVLOP_SERIAL_BAUDRATE
+	string "Serial console baudrate"
+	depends on UBUNTU_DEVLOP_SERIAL_CONSOLE
+	default "115200"
+	help
+	  Serial console baud rate (e.g., 115200, 57600).
 
 endmenu

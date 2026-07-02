@@ -6,10 +6,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TOP_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 source "${TOP_DIR}/.config"
+source "${TOP_DIR}/cache-common.sh"
 
 DEB_DIR="${SCRIPT_DIR}/${CONFIG_CPU_ARCH}"
-CACHE_ROOTFS_DIR="${CACHE_ROOTFS_DIR:-${TOP_DIR}/output/${CONFIG_NAME:-default}/cache/rootfs}"
-CACHE_FILE="${CACHE_ROOTFS_DIR}/ubuntu-deb-${DEB_CACHE_HASH}.tar.gz"
+ensure_cache_rootfs_dir
+CACHE_HASH="${DEB_CACHE_HASH:-$(echo "${CONFIG_NAME}${CONFIG_CPU_ARCH}${CONFIG_CPU}${CONFIG_UBUNTU_BASE}${CONFIG_UBUNTU_DEB_ADB}${CONFIG_UBUNTU_DEB_MALI}${CONFIG_UBUNTU_DEB_MPP}${CONFIG_UBUNTU_DEB_MPP_DEV}${CONFIG_UBUNTU_DEB_RGA}${CONFIG_UBUNTU_DEB_RGA_DEV}${CONFIG_UBUNTU_DEB_RKNPU2}${CONFIG_UBUNTU_DEB_RKNPU2_DEV}${CONFIG_UBUNTU_DEB_ROCKIT}${CONFIG_UBUNTU_DEB_ROCKIT_DEV}${CONFIG_UBUNTU_DEB_ROCKIT_TEST}${CONFIG_UBUNTU_DEB_CAMERA}${CONFIG_UBUNTU_DEB_IVA}${CONFIG_UBUNTU_DEB_IVA_DEV}${CONFIG_UBUNTU_DEB_COMMON_ALGO}${CONFIG_UBUNTU_DEB_COMMON_ALGO_DEV}${CONFIG_UBUNTU_DEB_GSTREAMER}${CONFIG_UBUNTU_DEB_RECOVERY}${CONFIG_UBUNTU_DEB_WIFI_AIC8800}${CONFIG_UBUNTU_DEB_WIFI_AP6256}${CONFIG_UBUNTU_DEB_WIFI_RTL8822CE}" | md5sum | cut -d' ' -f1)}"
+CACHE_FILE="${CACHE_ROOTFS_DIR}/ubuntu-deb-${CACHE_HASH}.tar.gz"
 
 if [ -z "${ROOTFS}" ]; then
     echo "Error: ROOTFS is not set"
@@ -24,6 +26,13 @@ if [ -f "${CACHE_FILE}" ]; then
     sudo tar zxf "${CACHE_FILE}" -C "${ROOTFS}"
     exit 0
 fi
+
+if [ ! -d "${ROOTFS}/usr" ] || [ ! -d "${ROOTFS}/etc" ]; then
+    restore_from_first_available_stage desktop app fstab base || true
+fi
+
+# Remove old deb cache files
+rm -f "${TOP_DIR}"/dl/ubuntu-deb-*.tar.gz
 
 install_deb() {
     local deb_file="$1"
@@ -81,7 +90,7 @@ if [ "${CONFIG_UBUNTU_DEB_ROCKIT}" = "y" ]; then
 fi
 
 if [ "${CONFIG_UBUNTU_DEB_CAMERA}" = "y" ]; then
-    install_deb "${DEB_DIR}/camera-engine-rkaiq_1.0.0_${CONFIG_CPU_ARCH}.deb"
+    install_deb "${DEB_DIR}/camera-engine-rkaiq-${CONFIG_CPU}_1.0.0_${CONFIG_CPU_ARCH}.deb"
 fi
 
 if [ "${CONFIG_UBUNTU_DEB_IVA}" = "y" ]; then

@@ -24,12 +24,24 @@ fi
 
 CACHE_ROOTFS_DIR="${CACHE_ROOTFS_DIR:-${TOP_DIR}/output/${CONFIG_NAME:-default}/cache/rootfs}"
 CACHE_APT_DIR="${CACHE_APT_DIR:-${TOP_DIR}/dl/packages-${CONFIG_UBUNTU_BASE}-${CONFIG_CPU_ARCH}}"
+BASE_CACHE_HASH="${BASE_CACHE_HASH:-$(echo "${CONFIG_UBUNTU_BASE}${CONFIG_CPU_ARCH}${CONFIG_CPU}${CONFIG_NAME}${CONFIG_PASSWORD}${CONFIG_ROOT_PASSWORD}" | md5sum | cut -d' ' -f1)}"
 CACHE_FILE="${CACHE_ROOTFS_DIR}/ubuntu-base-${BASE_CACHE_HASH}.tar.gz"
+
+# Backward compatibility: reuse any previously generated base cache in this board cache dir.
+if [ ! -f "${CACHE_FILE}" ]; then
+    LEGACY_CACHE_FILE="$(ls -1t "${CACHE_ROOTFS_DIR}"/ubuntu-base-*.tar.gz 2>/dev/null | head -n1 || true)"
+    if [ -n "${LEGACY_CACHE_FILE}" ]; then
+        CACHE_FILE="${LEGACY_CACHE_FILE}"
+    fi
+fi
 
 if [ -z "${ROOTFS}" ]; then
     echo "Error: ROOTFS is not set"
     exit 1
 fi
+
+# If previous build was interrupted, unmount stale mount points before cleanup.
+"${TOP_DIR}/ch-mount.sh" -u "${ROOTFS}" >/dev/null 2>&1 || true
 
 if [ -f "${CACHE_FILE}" ]; then
     echo "Found cached base package, extracting..."
@@ -98,6 +110,7 @@ useradd -G sudo -m -s /bin/bash "${USER_NAME}" 2>/dev/null || true
 if [ -n "${USER_PASSWORD}" ]; then
     echo "${USER_NAME}:${USER_PASSWORD}" | chpasswd
 fi
+gpasswd -a "${USER_NAME}" bluetooth
 gpasswd -a "${USER_NAME}" video
 gpasswd -a "${USER_NAME}" audio
 groupadd -f render
@@ -121,5 +134,6 @@ CHROOT_EOF
     sudo cp "${ROOTFS}/var/cache/apt/archives/"*.deb "${DEB_CACHE_DIR}/" 2>/dev/null || true
 
     echo "Caching base package..."
+    mkdir -p "${CACHE_ROOTFS_DIR}"
     sudo tar zcf "${CACHE_FILE}" -C "${ROOTFS}" .
 fi

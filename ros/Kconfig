@@ -1,0 +1,10 @@
+menu "ROS"
+
+config UBUNTU_ROS
+	string "ROS packages"
+	default ""
+	help
+	  Space-separated ROS apt package list to install.
+	  Use full package names, for example: ros-lyrical-ros-base
+
+endmenu

@@ -4,6 +4,9 @@
 #
 CONFIG_CPU_ARCH="arm64"
 CONFIG_CPU="rk3576"
+CONFIG_NAME="cocolamp"
+CONFIG_PASSWORD="cocolamp"
+CONFIG_ROOT_PASSWORD="cocolamp"
 
 #
 # Base System
@@ -15,7 +18,7 @@ CONFIG_UBUNTU_BASE="26.04"
 #
 CONFIG_UBUNTU_FSTAB="kmod systemd systemd-sysv udev"
 
-CONFIG_UBUNTU_APP="psmisc"
+CONFIG_UBUNTU_APP="psmisc vim net-tools isc-dhcp-client iwd libgudev-1.0-0 libgstreamer1.0-0"
 
 #
 # Deb Packages
@@ -28,7 +31,7 @@ CONFIG_UBUNTU_DEB_MPP=y
 CONFIG_UBUNTU_DEB_RGA=y
 # CONFIG_UBUNTU_DEB_RGA_DEV is not set
 CONFIG_UBUNTU_DEB_RKNPU2=y
-CONFIG_UBUNTU_DEB_ROCKIT=y
+#CONFIG_UBUNTU_DEB_ROCKIT=y
 # CONFIG_UBUNTU_DEB_ROCKIT_DEV is not set
 # CONFIG_UBUNTU_DEB_ROCKIT_TEST is not set
 CONFIG_UBUNTU_DEB_CAMERA=y
@@ -40,19 +43,19 @@ CONFIG_UBUNTU_DEB_WIFI_AIC8800=y
 # CONFIG_UBUNTU_DEB_WIFI_AP6256 is not set
 # CONFIG_UBUNTU_DEB_WIFI_RTL8822CE is not set
 
-CONFIG_UBUNTU_DEVLOP="sudo net-tools v4l-utils gstreamer1.0-tools"
-# openssh-server iperf3 cmake curl less redis git libdbus-1-dev
+CONFIG_UBUNTU_DEVLOP="glib-networking libnice10 libsrtp2-1 libsoup-3.0-0 libnss3 libnspr4 libopus0 pipewire alsa-utils bluez libspa-0.2-bluetooth v4l-utils"
+# sudo v4l-utils openssh-server iperf3 cmake curl less redis git libdbus-1-dev
+# libspa-0.2-bluetooth
 CONFIG_UBUNTU_DEVLOP_USB_ADB=y
-CONFIG_UBUNTU_DEVLOP_USB_RNDIS=y
 
 #
-# Clean
+# RELEASE
 #
-CONFIG_UBUNTU_CLEAN=y
+CONFIG_UBUNTU_RELEASE=y
 
 #
 # Package
 #
 CONFIG_UBUNTU_PACKGE=y
 CONFIG_UBUNTU_PACKGE_BS=512
-CONFIG_UBUNTU_PACKGE_COUNT="8192k"
+CONFIG_UBUNTU_PACKGE_COUNT="1024k"
